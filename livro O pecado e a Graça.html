@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<title>Flipbook</title>
+<style>
+body{margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#111}
+#book{width:360px;height:520px;position:relative;perspective:2000px}
+.page{position:absolute;width:100%;height:100%;transform-origin:left;transition:.6s}
+.page img{width:100%;height:100%;object-fit:cover}
+.flipped{transform:rotateY(-180deg)}
+.controls{position:fixed;bottom:20px}
+button{padding:10px 20px}
+</style>
+</head>
+<body>
+<div id="book"></div>
+<div class="controls">
+<button onclick="prev()">◀</button>
+<button onclick="next()">▶</button>
+</div>
+
+<script>
+const pages=["capa.png", "p1.png", "p2.png", "p3.png", "p4.png", "p5.png", "p6.png", "p7.png", "p8.png", "p9.png"];
+const book=document.getElementById("book");
+pages.forEach((p,i)=>{
+ let d=document.createElement("div");
+ d.className="page";
+ d.style.zIndex=pages.length-i;
+ d.innerHTML='<img src="assets/'+p+'">';
+ book.appendChild(d);
+});
+const els=[...document.querySelectorAll(".page")];
+let index=0;
+function next(){if(index<els.length){els[index].classList.add("flipped");index++;}}
+function prev(){if(index>0){index--;els[index].classList.remove("flipped");}}
+</script>
+</body>
+</html>
